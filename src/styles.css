@@ -2,3 +2,27 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.headerLinks {
+  text-decoration: none;
+  color: black;
+  margin-right: 12px;
+}
+
+.headerLinks:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.navbarBrand {
+  color: black;
+}
+
+.navbarBrand:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.headerSublinks {
+  color: black;
+}
