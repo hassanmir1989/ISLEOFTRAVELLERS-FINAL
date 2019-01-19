@@ -30,7 +30,7 @@ class Header extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="light" light expand="sm">
+        <Navbar color="light" light expand="md">
           <div className="container mt-2">
             <NavbarBrand className="font-italic">
               <NavLink className="navbarBrand" to="/">
@@ -68,7 +68,7 @@ class Header extends React.Component {
                     <NavLink to="/addBlog">
                       <DropdownItem>Add Blog</DropdownItem>
                     </NavLink>
-                    <NavLink to="/customerReviews">
+                    <NavLink to="/visitorReviews">
                       <DropdownItem>Customer Reviews</DropdownItem>
                     </NavLink>
                     <DropdownItem divider />

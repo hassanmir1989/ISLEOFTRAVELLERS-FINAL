@@ -26,3 +26,11 @@
 .headerSublinks {
   color: black;
 }
+
+.mandatoryFields {
+  color: red;
+}
+
+h6 {
+  font-style: italic;
+}
