@@ -12,9 +12,9 @@ import {
 import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 import { CountryDropdown } from "react-country-region-selector";
-class UpdateBlog extends React.Component {
-  constructor() {
-    super();
+class BlogForm extends React.Component {
+  constructor(props) {
+    super(props);
     this.onChangeBlogName = this.onChangeBlogName.bind(this);
     this.onChangeBlogDescription = this.onChangeBlogDescription.bind(this);
     this.onChangeBlogImageFileName = this.onChangeBlogImageFileName.bind(this);
@@ -25,11 +25,11 @@ class UpdateBlog extends React.Component {
     this.onChangeBlogType = this.onChangeBlogType.bind(this);
     this.onSubmitForm = this.onSubmitForm.bind(this);
     this.state = {
-      blogName: "",
-      blogDescription: "",
-      blogImageFileName: "",
-      blogImageURL: "",
-      blogLocation: "",
+      blogName: props.blogName ? props.blogName : "",
+      blogDescription: props.blogDescription ? props.blogDescription : "",
+      blogImageFileName: props.blogImageFileName ? props.blogImageFileName : "",
+      blogImageURL: props.blogImageURL ? props.blogImageURL : "",
+      blogLocation: props.blogLocation ? props.blogLocation : "",
       blogUploadTime: moment(),
       blogUploadProcess: "",
       blogIsPublic: true,
@@ -66,9 +66,7 @@ class UpdateBlog extends React.Component {
       blogImageURL
     }));
   }
-  onChangeBlogLocation(e) {
-    e.persist();
-    const blogLocation = e.target.value;
+  onChangeBlogLocation(blogLocation) {
     this.setState(() => ({
       blogLocation
     }));
@@ -112,7 +110,7 @@ class UpdateBlog extends React.Component {
       this.setState(() => ({
         error: ""
       }));
-      console.log(this.state);
+      this.props.onSubmitForm({ ...this.state });
     } else {
       this.setState(() => ({
         error: "Please enter all details to upload blog"
@@ -123,8 +121,7 @@ class UpdateBlog extends React.Component {
   render() {
     return (
       <div>
-        <Header />
-        <div className="container mt-5">
+        <div className="container my-5">
           <Form>
             {this.state.error && (
               <Alert color="danger">{this.state.error}</Alert>
@@ -149,7 +146,7 @@ class UpdateBlog extends React.Component {
                   <CountryDropdown
                     className="form-control"
                     value={this.state.blogLocation}
-                    onChange={blogLocation => this.setState({ blogLocation })}
+                    onChange={this.onChangeBlogLocation}
                   />
                 </FormGroup>
               </div>
@@ -169,7 +166,7 @@ class UpdateBlog extends React.Component {
                   </Input>
                 </FormGroup>
               </div>
-              <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
+              <div className="col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <Label>Date</Label>
                 <br />
                 <SingleDatePicker
@@ -179,6 +176,12 @@ class UpdateBlog extends React.Component {
                   } // PropTypes.func.isRequired
                   focused={this.state.focused} // PropTypes.bool
                   onFocusChange={({ focused }) => this.setState({ focused })} // PropTypes.func.isRequired
+                  numberOfMonths={1}
+                  showClearDate
+                  withFullScreenPortal
+                  isOutsideRange={() => {
+                    return false;
+                  }}
                 />
               </div>
             </div>
@@ -211,4 +214,4 @@ class UpdateBlog extends React.Component {
   }
 }
 
-export default UpdateBlog;
+export default BlogForm;

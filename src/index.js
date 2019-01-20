@@ -4,6 +4,7 @@ import AppRouter from "./AppRouter/AppRouter";
 import configureStore from "./store/store";
 import { Provider } from "react-redux";
 import { addVisitorReview } from "../src/actions/visitorReview";
+import { addAdminBlog } from "../src/actions/blogActions";
 import moment from "moment";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
@@ -19,33 +20,45 @@ const ReduxApp = () => (
 );
 
 store.dispatch(
-  addVisitorReview({
-    visitorReviewID: "ONE",
-    visitorReview: "Not given",
-    visitorContact: "Not given",
-    visitorEmail: "Not given",
-    visitorName: "Not given",
-    visitorReviewTime: moment().valueOf()
+  addAdminBlog({
+    blogID: "three",
+    blogName: "three",
+    blogDescription:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos, soluta! Asperiores amet ad quos excepturi nam dignissimos laborum deserunt, libero velit repudiandae iure eaque, quibusdam ab repellat assumenda iste molestias?",
+    blogImageFileName: "three",
+    blogImageURL: "Kuwait",
+    blogLocation: "three",
+    blogUploadTime: moment().valueOf(),
+    blogUploadProcess: "three",
+    blogIsPublic: true
   })
 );
 store.dispatch(
-  addVisitorReview({
-    visitorReviewID: "TWO",
-    visitorReview: "Not given",
-    visitorContact: "Not given",
-    visitorEmail: "Not given",
-    visitorName: "Not given",
-    visitorReviewTime: moment().valueOf()
+  addAdminBlog({
+    blogID: "One",
+    blogName: "One",
+    blogDescription:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos, soluta! Asperiores amet ad quos excepturi nam dignissimos laborum deserunt, libero velit repudiandae iure eaque, quibusdam ab repellat assumenda iste molestias?",
+    blogImageFileName: "One",
+    blogImageURL: "One",
+    blogLocation: "One",
+    blogUploadTime: moment().valueOf(),
+    blogUploadProcess: "One",
+    blogIsPublic: true
   })
 );
 store.dispatch(
-  addVisitorReview({
-    visitorReviewID: "THREE",
-    visitorReview: "Not given",
-    visitorContact: "Not given",
-    visitorEmail: "Not given",
-    visitorName: "Not given",
-    visitorReviewTime: moment().valueOf()
+  addAdminBlog({
+    blogID: "TWO",
+    blogName: "two",
+    blogDescription:
+      "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos, soluta! Asperiores amet ad quos excepturi nam dignissimos laborum deserunt, libero velit repudiandae iure eaque, quibusdam ab repellat assumenda iste molestias?",
+    blogImageFileName: "two",
+    blogImageURL: "two",
+    blogLocation: "two",
+    blogUploadTime: moment().valueOf(),
+    blogUploadProcess: "two",
+    blogIsPublic: true
   })
 );
 const rootElement = document.getElementById("root");

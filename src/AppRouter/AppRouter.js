@@ -1,19 +1,21 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import MainPage from "../Components/MainPage";
-import Blog from "../Components/Blog";
+import Blogs from "../Components/Blogs";
 import ContactUs from "../Components/ContactUs";
 import Admin from "../Components/Admin";
 import PageNotFound from "../Components/PageNotFound";
-import UpdateBlog from "../Components/UpdateBlog";
+import AddBlog from "../Components/AddBlog";
+import EditBlog from "../Components/EditBlog";
+
 import VisitorReviews from "../Components/VisitorReviews";
 const AppRouter = () => (
   <BrowserRouter>
     <Switch>
       <Route path="/" exact component={MainPage} />
-      <Route path="/blog" component={Blog} />
-      <Route path="/addBlog" component={UpdateBlog} />
-      <Route path="/editBlog/:id" component={UpdateBlog} />
+      <Route path="/blogs" component={Blogs} />
+      <Route path="/addBlog" component={AddBlog} />
+      <Route path="/editBlog/:id" component={EditBlog} />
       <Route path="/admin" component={Admin} />
       <Route path="/visitorReviews" component={VisitorReviews} />
       <Route path="/contactUs" component={ContactUs} />
