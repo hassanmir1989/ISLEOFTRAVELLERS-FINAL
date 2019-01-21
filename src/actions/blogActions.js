@@ -11,7 +11,7 @@ const addAdminBlog = ({
 }) => ({
   type: "ADD_BLOG",
   blog: {
-    blogID
+    blogID,
     blogName,
     blogDescription,
     blogImageFileName,
@@ -23,4 +23,15 @@ const addAdminBlog = ({
   }
 });
 
-export { addAdminBlog };
+const removeAdminBlog = id => ({
+  type: "REMOVE_BLOG",
+  id
+});
+
+const editAdminBlog = ({ id, blog }) => ({
+  type: "EDIT_BLOG",
+  id,
+  blog
+});
+
+export { addAdminBlog, removeAdminBlog, editAdminBlog };

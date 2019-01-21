@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "./Header";
-
 class Admin extends React.Component {
   render() {
     return (

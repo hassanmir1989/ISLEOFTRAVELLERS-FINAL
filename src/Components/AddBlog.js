@@ -3,9 +3,9 @@ import Header from "../Components/Header";
 import BlogForm from "../Components/BlogForm";
 import { connect } from "react-redux";
 import { addAdminBlog } from "../actions/blogActions";
-class UpdateBlog extends React.Component {
+
+class AddBlog extends React.Component {
   render() {
-    console.log(this.props.adminBlog);
     return (
       <div>
         <Header />
@@ -20,4 +20,4 @@ class UpdateBlog extends React.Component {
   }
 }
 
-export default connect()(UpdateBlog);
+export default connect()(AddBlog);

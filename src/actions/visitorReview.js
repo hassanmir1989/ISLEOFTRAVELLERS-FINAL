@@ -1,5 +1,7 @@
+import database from "../firebase/firebase";
+
 const addVisitorReview = ({
-  visitorReviewID = "",
+  visitorReviewID,
   visitorReview = "Not given",
   visitorContact = "Not given",
   visitorEmail = "Not given",
@@ -17,9 +19,43 @@ const addVisitorReview = ({
   }
 });
 
+const startAddVisitorReview = (reviewData = {}) => {
+  return dispatch => {
+    database
+      .ref("visitorReviews")
+      .push({
+        ...reviewData
+      })
+      .then(ref => {
+        dispatch(
+          addVisitorReview({
+            ...reviewData,
+            visitorReviewID: ref.key
+          })
+        );
+      });
+  };
+};
+
 const removeVisitorReview = id => ({
   type: "REMOVE_REVIEW",
   id
 });
 
-export { addVisitorReview, removeVisitorReview };
+const startRemoveVisitorReview = id => {
+  return dispatch => {
+    database
+      .ref(`visitorReviews/${id}`)
+      .remove()
+      .then(() => {
+        dispatch(removeVisitorReview(id));
+      });
+  };
+};
+
+export {
+  addVisitorReview,
+  removeVisitorReview,
+  startAddVisitorReview,
+  startRemoveVisitorReview
+};

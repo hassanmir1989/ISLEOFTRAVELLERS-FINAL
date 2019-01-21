@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import moment from "moment";
 import { connect } from "react-redux";
-import { removeVisitorReview } from "../actions/visitorReview";
+import { startRemoveVisitorReview } from "../actions/visitorReview";
 class VisitorReviewModal extends React.Component {
   constructor(props) {
     super(props);
@@ -39,7 +39,8 @@ class VisitorReviewModal extends React.Component {
             <div className="row">
               <div className="col-sm-4 col-md-4">From:</div>
               <div className="col-sm-6 col-md-6">
-                {this.props.visitorName} - {this.props.visitorReviewID}
+                {this.props.visitorName} <br />
+                ID: {this.props.visitorReviewID}
               </div>
             </div>
 
@@ -66,7 +67,7 @@ class VisitorReviewModal extends React.Component {
               <Button
                 onClick={() => {
                   this.props.dispatch(
-                    removeVisitorReview(this.props.visitorReviewID)
+                    startRemoveVisitorReview(this.props.visitorReviewID)
                   );
                 }}
                 color="danger"

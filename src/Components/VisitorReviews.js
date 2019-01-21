@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../Components/Header";
 import { connect } from "react-redux";
-import { Media, Table } from "reactstrap";
+import { Table } from "reactstrap";
 import moment from "moment";
 import VisitorReviewModal from "../Components/VisitorReviewsModal";
 const VisitorReviews = ({ visitorReviews, ...rest }) => (
@@ -20,7 +20,7 @@ const VisitorReviews = ({ visitorReviews, ...rest }) => (
               </tr>
             </thead>
             {visitorReviews.map((review, index) => (
-              <tbody className="text-center">
+              <tbody key={review.reviewBlogID} className="text-center">
                 <tr>
                   <th scope="row">{index + 1}</th>
                   <td>{review.visitorName}</td>

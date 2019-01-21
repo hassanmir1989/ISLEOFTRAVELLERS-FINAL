@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 import MainPage from "../Components/MainPage";
 import Blogs from "../Components/Blogs";
 import ContactUs from "../Components/ContactUs";
@@ -7,10 +7,13 @@ import Admin from "../Components/Admin";
 import PageNotFound from "../Components/PageNotFound";
 import AddBlog from "../Components/AddBlog";
 import EditBlog from "../Components/EditBlog";
-
+import createHistory from "history/createBrowserHistory";
 import VisitorReviews from "../Components/VisitorReviews";
+
+const history = createHistory();
+
 const AppRouter = () => (
-  <BrowserRouter>
+  <Router history={history}>
     <Switch>
       <Route path="/" exact component={MainPage} />
       <Route path="/blogs" component={Blogs} />
@@ -21,7 +24,7 @@ const AppRouter = () => (
       <Route path="/contactUs" component={ContactUs} />
       <Route component={PageNotFound} />
     </Switch>
-  </BrowserRouter>
+  </Router>
 );
 
 export default AppRouter;

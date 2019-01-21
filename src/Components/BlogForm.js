@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../Components/Header";
 import {
   Button,
   Form,
@@ -12,6 +11,8 @@ import {
 import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 import { CountryDropdown } from "react-country-region-selector";
+import FileUploader from "react-firebase-file-uploader";
+import { storage } from "../firebase/firebase";
 class BlogForm extends React.Component {
   constructor(props) {
     super(props);
@@ -30,9 +31,9 @@ class BlogForm extends React.Component {
       blogImageFileName: props.blogImageFileName ? props.blogImageFileName : "",
       blogImageURL: props.blogImageURL ? props.blogImageURL : "",
       blogLocation: props.blogLocation ? props.blogLocation : "",
-      blogUploadTime: moment(),
-      blogUploadProcess: "",
-      blogIsPublic: true,
+      blogUploadTime: props.blogUploadTime ? props.blogUploadTime : moment(),
+      blogUploadProcess: 0,
+      blogIsPublic: props.blogIsPublic ? props.blogIsPublic : false,
       focused: false,
       error: ""
     };
@@ -89,13 +90,13 @@ class BlogForm extends React.Component {
   onChangeBlogType(e) {
     e.persist();
     const blogTypeValue = e.target.value.toLowerCase();
-    if (blogTypeValue === "private") {
+    if (blogTypeValue === "public") {
       this.setState(() => ({
-        blogIsPublic: false
+        blogIsPublic: true
       }));
     } else {
       this.setState(() => ({
-        blogIsPublic: true
+        blogIsPublic: false
       }));
     }
   }
@@ -131,6 +132,7 @@ class BlogForm extends React.Component {
               <div className="col-12 col-xs-12 col-sm-12 col-md-5 col-lg-6">
                 <FormGroup>
                   <Label>Blog Name</Label>
+
                   <Input
                     type="text"
                     name="blogName"
@@ -156,14 +158,26 @@ class BlogForm extends React.Component {
               <div className="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <FormGroup>
                   <Label>Blog Type</Label>
-                  <Input
-                    type="select"
-                    name="blogType"
-                    onChange={this.onChangeBlogType}
-                  >
-                    <option>Public</option>
-                    <option>Private</option>
-                  </Input>
+                  {this.state.blogIsPublic && (
+                    <Input
+                      type="select"
+                      name="blogType"
+                      onChange={this.onChangeBlogType}
+                    >
+                      <option>Public</option>
+                      <option>Private</option>
+                    </Input>
+                  )}
+                  {!this.state.blogIsPublic && (
+                    <Input
+                      type="select"
+                      name="blogType"
+                      onChange={this.onChangeBlogType}
+                    >
+                      <option>Private</option>
+                      <option>Public</option>
+                    </Input>
+                  )}
                 </FormGroup>
               </div>
               <div className="col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -193,19 +207,28 @@ class BlogForm extends React.Component {
                 name="blogDescription"
                 id="exampleText"
                 onChange={this.onChangeBlogDescription}
-                placeholder={this.state.blogDescription}
+                value={this.state.blogDescription}
               />
             </FormGroup>
 
             <FormGroup>
               <Label for="exampleFile">File</Label>
-              <Input type="file" name="file" id="exampleFile" />
+              <FileUploader
+                id="exampleFile"
+                accept="image/*"
+                name="avatar"
+                randomizeFilename
+                storageRef={storage.ref("images")}
+                onUploadStart={this.handleUploadStart}
+                onUploadError={this.handleUploadError}
+                onUploadSuccess={this.handleUploadSuccess}
+                onProgress={this.handleProgress}
+              />
               <FormText color="muted">
                 Please make sure the size of the image being uploaded does not
                 exceed 1MB.
               </FormText>
             </FormGroup>
-
             <Button onClick={this.onSubmitForm}>Submit</Button>
           </Form>
         </div>

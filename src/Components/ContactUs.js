@@ -9,7 +9,7 @@ import {
   Input,
   Alert
 } from "reactstrap";
-import { addVisitorReview } from "../actions/visitorReview";
+import { startAddVisitorReview } from "../actions/visitorReview";
 import { connect } from "react-redux";
 import moment from "moment";
 class ContactUs extends React.Component {
@@ -168,7 +168,7 @@ class ContactUs extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  addVisitorReview: review => dispatch(addVisitorReview(review))
+  addVisitorReview: review => dispatch(startAddVisitorReview(review))
 });
 export default connect(
   undefined,
