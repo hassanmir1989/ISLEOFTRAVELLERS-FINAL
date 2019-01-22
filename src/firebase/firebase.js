@@ -15,5 +15,5 @@ require("firebase/storage");
 // firebase.initializeApp(config);
 
 const database = firebase.database();
-var storage = firebase.storage();
-export { database as default, storage };
+export const storage = firebase.storage();
+export default database;

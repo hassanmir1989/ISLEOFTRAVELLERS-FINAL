@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../Components/Header";
 import BlogForm from "../Components/BlogForm";
 import { connect } from "react-redux";
-import { addAdminBlog } from "../actions/blogActions";
+import { startAddAdminBlog } from "../actions/blogActions";
 
 class AddBlog extends React.Component {
   render() {
@@ -11,7 +11,8 @@ class AddBlog extends React.Component {
         <Header />
         <BlogForm
           onSubmitForm={data => {
-            this.props.dispatch(addAdminBlog(data));
+            this.props.dispatch(startAddAdminBlog(data));
+
             this.props.history.push("/");
           }}
         />

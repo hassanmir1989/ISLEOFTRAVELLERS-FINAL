@@ -20,7 +20,7 @@ const VisitorReviews = ({ visitorReviews, ...rest }) => (
               </tr>
             </thead>
             {visitorReviews.map((review, index) => (
-              <tbody key={review.reviewBlogID} className="text-center">
+              <tbody key={review.visitorReviewID} className="text-center">
                 <tr>
                   <th scope="row">{index + 1}</th>
                   <td>{review.visitorName}</td>

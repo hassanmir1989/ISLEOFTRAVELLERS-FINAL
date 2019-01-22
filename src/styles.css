@@ -49,3 +49,7 @@ h6 {
     transform: rotate(360deg);
   }
 }
+
+.signIn {
+  margin-top: 10%;
+}

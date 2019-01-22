@@ -32,34 +32,27 @@ class Header extends React.Component {
       <div>
         <Navbar color="light" light expand="md">
           <div className="container mt-2">
-            <NavbarBrand className="font-italic">
-              <NavLink className="navbarBrand" to="/">
-                <i className="fas fa-globe-asia" /> Isle of Travellers{" "}
-              </NavLink>
-            </NavbarBrand>
+            <NavLink className="navbarBrand font-italic" to="/">
+              <i className="fas fa-globe-asia" /> Isle of Travellers{" "}
+            </NavLink>
+
             <NavbarToggler onClick={this.toggle} />
 
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
-                <NavItem className="navitem">
-                  <NavLink
-                    className="headerLinks"
-                    activeClassName="selected"
-                    to="/"
-                  >
-                    Adventures
-                  </NavLink>
-                </NavItem>
-                <NavItem className="navitem">
-                  <NavLink className="headerLinks" to="/blogs">
-                    Blog
-                  </NavLink>
-                </NavItem>
-                <NavItem className="navitem">
-                  <NavLink className="headerLinks" to="/contactUs">
-                    Contact Us
-                  </NavLink>
-                </NavItem>
+                <NavLink
+                  className="headerLinks"
+                  activeClassName="selected"
+                  to="/"
+                >
+                  Adventures
+                </NavLink>
+                <NavLink className="headerLinks" to="/blogs">
+                  Blog
+                </NavLink>
+                <NavLink className="headerLinks" to="/contactUs">
+                  Contact Us
+                </NavLink>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle className="p-0" nav caret>
                     <span className="headerLinks m-0 p-0">Admin</span>
@@ -74,6 +67,9 @@ class Header extends React.Component {
                     <DropdownItem divider />
                     <NavLink to="/signOut">
                       <DropdownItem>Sign Out</DropdownItem>
+                    </NavLink>
+                    <NavLink to="/signIn">
+                      <DropdownItem>Sign In</DropdownItem>
                     </NavLink>
                   </DropdownMenu>
                 </UncontrolledDropdown>

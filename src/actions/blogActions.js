@@ -1,3 +1,5 @@
+import database from "../firebase/firebase";
+
 const addAdminBlog = ({
   blogID,
   blogName,
@@ -23,6 +25,26 @@ const addAdminBlog = ({
   }
 });
 
+const startAddAdminBlog = (blogDetails = {}) => {
+  return dispatch => {
+    database
+      .ref(`adminBlogs`)
+      .push({
+        ...blogDetails,
+        blogUploadTime: blogDetails.blogUploadTime.valueOf()
+      })
+
+      .then(ref => {
+        dispatch(
+          addAdminBlog({
+            ...blogDetails,
+            blogID: ref.key
+          })
+        );
+      });
+  };
+};
+
 const removeAdminBlog = id => ({
   type: "REMOVE_BLOG",
   id
@@ -34,4 +56,4 @@ const editAdminBlog = ({ id, blog }) => ({
   blog
 });
 
-export { addAdminBlog, removeAdminBlog, editAdminBlog };
+export { startAddAdminBlog, removeAdminBlog, editAdminBlog };

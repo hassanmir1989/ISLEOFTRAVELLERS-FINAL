@@ -16,7 +16,7 @@ class Blogs extends React.Component {
                 <div className="mx-auto col-8 col-xs-4 col-sm-6 col-md-6 col-lg-3 p-2 my-auto">
                   <img
                     className="img-fluid  img-thumbnail"
-                    src="http://photos.hamariweb.com/photos/Pakistan-Natural-Glacier-Deep-Freezer-Hunza-Pakistan-3006.jpg"
+                    src={singleBlog.blogImageURL}
                     alt=""
                   />
                 </div>
