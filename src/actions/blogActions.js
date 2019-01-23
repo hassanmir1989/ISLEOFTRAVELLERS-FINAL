@@ -1,4 +1,5 @@
 import database from "../firebase/firebase";
+import { storage } from "../firebase/firebase";
 
 const addAdminBlog = ({
   blogID,
@@ -26,7 +27,7 @@ const addAdminBlog = ({
 });
 
 const startAddAdminBlog = (blogDetails = {}) => {
-  return dispatch => {
+  return (dispatch, state) => {
     database
       .ref(`adminBlogs`)
       .push({
@@ -50,10 +51,62 @@ const removeAdminBlog = id => ({
   id
 });
 
+const startRemoveAdminBlog = (id, blogImageFileName) => {
+  return dispatch => {
+    database
+      .ref(`adminBlogs/${id}`)
+      .remove()
+      .then(() => {
+        storage
+          .ref(`blogImages/${blogImageFileName}`)
+          .delete()
+          .then(() => {
+            dispatch(removeAdminBlog(id));
+          });
+      });
+  };
+};
+
 const editAdminBlog = ({ id, blog }) => ({
   type: "EDIT_BLOG",
   id,
   blog
 });
 
-export { startAddAdminBlog, removeAdminBlog, editAdminBlog };
+const startEditAdminBlog = ({ id, blog }) => {
+  return dispatch => {
+    database
+      .ref(`adminBlogs/${id}`)
+      .update({
+        ...blog,
+        blogUploadTime: blog.blogUploadTime.valueOf()
+      })
+      .then(() => {
+        dispatch(editAdminBlog({ id, blog }));
+      });
+  };
+};
+
+const startAddBlogs = () => {
+  return dispatch => {
+    return database
+      .ref("adminBlogs")
+      .once("value")
+      .then(snapshot => {
+        snapshot.forEach(childSnapshot => {
+          dispatch(
+            addAdminBlog({
+              blogID: childSnapshot.key,
+              ...childSnapshot.val()
+            })
+          );
+        });
+      });
+  };
+};
+export {
+  startAddAdminBlog,
+  startAddBlogs,
+  startRemoveAdminBlog,
+  startEditAdminBlog
+};

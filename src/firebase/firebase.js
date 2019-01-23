@@ -2,6 +2,7 @@ var firebase = require("firebase/app");
 
 require("firebase/database");
 require("firebase/storage");
+require("firebase/auth");
 
 // Initialize Firebase
 // var config = {
@@ -16,4 +17,5 @@ require("firebase/storage");
 
 const database = firebase.database();
 export const storage = firebase.storage();
+export const auth = firebase.auth();
 export default database;

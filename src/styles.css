@@ -41,15 +41,44 @@ h6 {
   animation-iteration-count: infinite;
 }
 
+.fa-redo-alt {
+  font-size: 250%;
+  animation-name: lodingPage;
+  animation-duration: 5s;
+
+  animation-iteration-count: infinite;
+}
+
 @keyframes globeRound {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lodingPage {
+  0% {
+    color: black;
+    transform: rotate(0deg);
+  }
+
+  50% {
+    color: grey;
+    transform: rotate(180deg);
+  }
+
+  100% {
+    color: white;
     transform: rotate(360deg);
   }
 }
 
 .signIn {
   margin-top: 10%;
+}
+.loadingPage {
+  margin-top: 35%;
 }

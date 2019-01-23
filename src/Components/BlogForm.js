@@ -32,7 +32,9 @@ class BlogForm extends React.Component {
       blogImageFileName: props.blogImageFileName ? props.blogImageFileName : "",
       blogImageURL: props.blogImageURL ? props.blogImageURL : "",
       blogLocation: props.blogLocation ? props.blogLocation : "",
-      blogUploadTime: props.blogUploadTime ? props.blogUploadTime : moment(),
+      blogUploadTime: props.blogUploadTime
+        ? moment(props.blogUploadTime)
+        : moment(),
       blogUploadProcess: 0,
       blogIsPublic: props.blogIsPublic ? props.blogIsPublic : false,
       focused: false,
@@ -114,13 +116,28 @@ class BlogForm extends React.Component {
     }
   }
   handleUploadSuccess(blogImageFileName) {
-    this.setState({ blogImageFileName });
+    if (this.state.blogImageFileName) {
+      storage
+        .ref(`blogImages/${this.state.blogImageFileName}`)
+        .delete()
+        .then(() => {
+          this.setState({ blogImageFileName });
 
-    storage
-      .ref("blogImages")
-      .child(blogImageFileName)
-      .getDownloadURL()
-      .then(blogImageURL => this.setState({ blogImageURL }));
+          storage
+            .ref("blogImages")
+            .child(blogImageFileName)
+            .getDownloadURL()
+            .then(blogImageURL => this.setState({ blogImageURL }));
+        });
+    } else {
+      this.setState({ blogImageFileName });
+
+      storage
+        .ref("blogImages")
+        .child(blogImageFileName)
+        .getDownloadURL()
+        .then(blogImageURL => this.setState({ blogImageURL }));
+    }
   }
   render() {
     return (

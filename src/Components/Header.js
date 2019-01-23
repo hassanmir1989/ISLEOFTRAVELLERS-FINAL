@@ -11,6 +11,7 @@ import {
   DropdownToggle,
   DropdownMenu
 } from "reactstrap";
+import { auth } from "../firebase/firebase";
 import { NavLink } from "react-router-dom";
 
 class Header extends React.Component {
@@ -65,11 +66,27 @@ class Header extends React.Component {
                       <DropdownItem>Customer Reviews</DropdownItem>
                     </NavLink>
                     <DropdownItem divider />
-                    <NavLink to="/signOut">
-                      <DropdownItem>Sign Out</DropdownItem>
+
+                    <DropdownItem
+                      onClick={() => {
+                        auth.signOut().then(
+                          () => {
+                            console.log("signout");
+                          },
+                          err => {
+                            console.log(err);
+                          }
+                        );
+                      }}
+                    >
+                      Sign Out
+                    </DropdownItem>
+
+                    <NavLink to="/logIn">
+                      <DropdownItem>Log In</DropdownItem>
                     </NavLink>
-                    <NavLink to="/signIn">
-                      <DropdownItem>Sign In</DropdownItem>
+                    <NavLink to="/signUp">
+                      <DropdownItem>Sign Up</DropdownItem>
                     </NavLink>
                   </DropdownMenu>
                 </UncontrolledDropdown>

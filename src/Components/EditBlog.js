@@ -2,7 +2,8 @@ import React from "react";
 import Header from "../Components/Header";
 import BlogForm from "../Components/BlogForm";
 import { connect } from "react-redux";
-import { editAdminBlog } from "../actions/blogActions";
+import { startEditAdminBlog } from "../actions/blogActions";
+
 class EditBlog extends React.Component {
   render() {
     return (
@@ -10,9 +11,9 @@ class EditBlog extends React.Component {
         <Header />
         <BlogForm
           {...this.props.editBlog}
-          onSubmitForm={data => {
+          onSubmitForm={blog => {
             this.props.dispatch(
-              editAdminBlog({ id: this.props.match.params.id, blog: data })
+              startEditAdminBlog({ id: this.props.match.params.id, blog })
             );
             this.props.history.push("/blogs");
           }}
