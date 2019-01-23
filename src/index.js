@@ -18,6 +18,7 @@ import "react-dates/lib/css/_datepicker.css";
 import LoadingSpinner from "../src/Components/LoadingPage";
 import { login, logout } from "../src/actions/auth";
 import { history } from "../src/AppRouter/AppRouter";
+import { Redirect } from "react-router-dom";
 const store = configureStore();
 
 const ReduxApp = () => (
@@ -26,20 +27,29 @@ const ReduxApp = () => (
   </Provider>
 );
 
+let hasRendered = false;
+
+const render = () => {
+  if (!hasRendered) {
+    store.dispatch(startAddBlogs()).then(() => {
+      ReactDOM.render(<ReduxApp />, rootElement);
+      hasRendered = true;
+    });
+  }
+};
+
 const rootElement = document.getElementById("root");
 ReactDOM.render(<LoadingSpinner />, rootElement);
 
 auth.onAuthStateChanged(user => {
   if (user) {
     store.dispatch(login(user.uid));
-    console.log(user.uid);
+    render();
+    if (history.location.pathname === "/logIn") {
+      history.push("/");
+    }
   } else {
+    render();
     store.dispatch(logout());
-    history.push("/");
-    console.log("signed out");
   }
-});
-
-store.dispatch(startAddBlogs()).then(() => {
-  ReactDOM.render(<ReduxApp />, rootElement);
 });

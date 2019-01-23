@@ -4,7 +4,7 @@ const login = uid => ({
 });
 
 const logout = () => ({
-  type: "logout"
+  type: "LOGOUT"
 });
 
 export { login, logout };

@@ -13,6 +13,8 @@ import {
 } from "reactstrap";
 import { auth } from "../firebase/firebase";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { logout } from "../actions/auth";
 
 class Header extends React.Component {
   constructor(props) {
@@ -46,6 +48,15 @@ class Header extends React.Component {
                   activeClassName="selected"
                   to="/"
                 >
+                  {this.props.isAuthenticated && (
+                    <p>Welcome {this.props.authID}</p>
+                  )}
+                </NavLink>
+                <NavLink
+                  className="headerLinks"
+                  activeClassName="selected"
+                  to="/"
+                >
                   Adventures
                 </NavLink>
                 <NavLink className="headerLinks" to="/blogs">
@@ -54,7 +65,11 @@ class Header extends React.Component {
                 <NavLink className="headerLinks" to="/contactUs">
                   Contact Us
                 </NavLink>
-                <UncontrolledDropdown nav inNavbar>
+                <UncontrolledDropdown
+                  hidden={!this.props.isAuthenticated}
+                  nav
+                  inNavbar
+                >
                   <DropdownToggle className="p-0" nav caret>
                     <span className="headerLinks m-0 p-0">Admin</span>
                   </DropdownToggle>
@@ -66,28 +81,19 @@ class Header extends React.Component {
                       <DropdownItem>Customer Reviews</DropdownItem>
                     </NavLink>
                     <DropdownItem divider />
-
+                    <NavLink to="/signUp">
+                      <DropdownItem>Add Admin</DropdownItem>
+                    </NavLink>
                     <DropdownItem
+                      hidden={!this.props.isAuthenticated}
                       onClick={() => {
-                        auth.signOut().then(
-                          () => {
-                            console.log("signout");
-                          },
-                          err => {
-                            console.log(err);
-                          }
-                        );
+                        auth.signOut().catch(err => {
+                          console.log(err);
+                        });
                       }}
                     >
                       Sign Out
                     </DropdownItem>
-
-                    <NavLink to="/logIn">
-                      <DropdownItem>Log In</DropdownItem>
-                    </NavLink>
-                    <NavLink to="/signUp">
-                      <DropdownItem>Sign Up</DropdownItem>
-                    </NavLink>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
@@ -99,4 +105,9 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => ({
+  isAuthenticated: !!state.authReducer.uid,
+  authID: state.authReducer.uid
+});
+
+export default connect(mapStateToProps)(Header);

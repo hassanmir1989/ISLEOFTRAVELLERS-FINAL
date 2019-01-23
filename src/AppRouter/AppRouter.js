@@ -10,6 +10,7 @@ import EditBlog from "../Components/EditBlog";
 import createHistory from "history/createBrowserHistory";
 import VisitorReviews from "../Components/VisitorReviews";
 import SignUp from "../Components/SignUp";
+import PrivateRoute from "./PrivateRoutes";
 export const history = createHistory();
 
 const AppRouter = () => (
@@ -17,11 +18,11 @@ const AppRouter = () => (
     <Switch>
       <Route path="/" exact component={MainPage} />
       <Route path="/blogs" component={Blogs} />
-      <Route path="/addBlog" component={AddBlog} />
-      <Route path="/editBlog/:id" component={EditBlog} />
-      <Route path="/signUp" component={SignUp} />
+      <PrivateRoute path="/addBlog" component={AddBlog} />
+      <PrivateRoute path="/editBlog/:id" component={EditBlog} />
+      <PrivateRoute path="/signUp" component={SignUp} />
       <Route path="/logIn" component={LogIn} />
-      <Route path="/visitorReviews" component={VisitorReviews} />
+      <PrivateRoute path="/visitorReviews" component={VisitorReviews} />
       <Route path="/contactUs" component={ContactUs} />
       <Route component={PageNotFound} />
     </Switch>
