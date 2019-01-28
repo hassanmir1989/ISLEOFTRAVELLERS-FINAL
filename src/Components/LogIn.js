@@ -68,8 +68,6 @@ class LogIn extends React.Component {
                 <Input
                   className=""
                   type="email"
-                  name="email"
-                  id="exampleEmail"
                   placeholder="Email"
                   value={this.state.email}
                   onChange={this.onChangeEmail}
@@ -83,8 +81,6 @@ class LogIn extends React.Component {
                 <Input
                   className=""
                   type="password"
-                  name="email"
-                  id="exampleEmail"
                   placeholder="Password"
                   value={this.state.password}
                   onChange={this.onChangePassword}

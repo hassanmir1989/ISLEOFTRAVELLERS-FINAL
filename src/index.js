@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import AppRouter from "./AppRouter/AppRouter";
 import configureStore from "./store/store";
 import { Provider } from "react-redux";
-import { addVisitorReview } from "../src/actions/visitorReview";
+import { startAddReview } from "../src/actions/visitorReview";
 import {
   startAddBlogs,
   editAdminBlog,
-  addAdminBlog
+  startAddPublicBlogs
 } from "../src/actions/blogActions";
 import moment from "moment";
 import { auth } from "./firebase/firebase";
@@ -31,10 +31,9 @@ let hasRendered = false;
 
 const render = () => {
   if (!hasRendered) {
-    store.dispatch(startAddBlogs()).then(() => {
-      ReactDOM.render(<ReduxApp />, rootElement);
-      hasRendered = true;
-    });
+    store.dispatch(startAddBlogs());
+    ReactDOM.render(<ReduxApp />, rootElement);
+    hasRendered = true;
   }
 };
 
@@ -44,6 +43,7 @@ ReactDOM.render(<LoadingSpinner />, rootElement);
 auth.onAuthStateChanged(user => {
   if (user) {
     store.dispatch(login(user.uid));
+    store.dispatch(startAddReview());
     render();
     if (history.location.pathname === "/logIn") {
       history.push("/");

@@ -1,128 +1,147 @@
 import React from "react";
 import Header from "./Header";
 import { connect } from "react-redux";
-import { Button, ButtonGroup } from "reactstrap";
+import {
+  Button,
+  ButtonGroup,
+  ButtonDropdown,
+  DropdownItem,
+  DropdownToggle,
+  DropdownMenu
+} from "reactstrap";
+
 import { startRemoveAdminBlog } from "../actions/blogActions";
 class Blogs extends React.Component {
+  constructor() {
+    super();
+  }
+
   render() {
     return (
       <div>
         <Header />
 
-        <div className="container mt-3">
-          {!this.props.isAuthenticated &&
-            this.props.adminBlogs.map(singleBlog => {
-              if (singleBlog.blogIsPublic) {
-                return (
-                  <div key={singleBlog.blogID}>
-                    <div className="row text-center shadow">
-                      <div className="mx-auto col-8 col-xs-4 col-sm-6 col-md-6 col-lg-3 p-2 my-auto">
-                        <img
-                          className="img-fluid  img-thumbnail"
-                          src={singleBlog.blogImageURL}
-                          alt=""
-                        />
-                      </div>
-                      <div
-                        style={{ wordBreak: "break-all" }}
-                        className="col-8  col-xs-10 col-sm-6 col-md-6 col-lg-3 p-2 mx-auto my-auto"
+        <div className="container mt-3 p-2">
+          <div className="row">
+            {this.props.isAuthenticated &&
+              this.props.adminBlogs.map(singleBlog => (
+                <div
+                  key={singleBlog.blogID}
+                  className="col-10  col-sm-10  col-md-5 col-lg-3 text-center mb-2 border rounded mx-auto shadow-lg mb-5 bg-white p-0"
+                >
+                  <div className="blog-image my-4 p-0 ">
+                    <img
+                      src={singleBlog.blogImageURL}
+                      alt=""
+                      className="img-fluid my-auto"
+                    />
+                  </div>
+
+                  <div className="card-body ">
+                    <h5
+                      style={{ wordBreak: "break-all" }}
+                      className="card-title"
+                    >
+                      {singleBlog.blogName}
+                    </h5>
+                    <p className="card-text" style={{ wordBreak: "break-all" }}>
+                      {`${singleBlog.blogDescription.substr(0, 80)}... `}
+                      <Button className="p-0" color="link">
+                        Click for more
+                      </Button>
+                    </p>
+
+                    <ButtonGroup>
+                      <Button
+                        onClick={() => {
+                          this.props.history.push(
+                            `editBlog/${singleBlog.blogID}`
+                          );
+                        }}
+                        color="warning"
                       >
-                        <h3 className="d-inline">{singleBlog.blogName}</h3>
-                        <br />
-                        <h5 className="d-inline">{singleBlog.blogLocation}</h5>
-                        <h6>
-                          {singleBlog.blogDescription.substring(0, 100)}...
-                        </h6>
-                        <Button color="link">Click For More</Button>
-                        <div>
-                          <ButtonGroup hidden={!this.props.isAuthenticated}>
-                            <Button
-                              onClick={() => {
-                                this.props.history.push(
-                                  `editBlog/${singleBlog.blogID}`
-                                );
-                              }}
-                              color="warning"
-                            >
-                              Edit
-                            </Button>
-                            <Button
-                              onClick={() => {
-                                this.props.dispatch(
-                                  startRemoveAdminBlog(
-                                    singleBlog.blogID,
-                                    singleBlog.blogImageFileName
-                                  )
-                                );
-                              }}
-                              color="danger"
-                            >
-                              Delete
-                            </Button>
-                          </ButtonGroup>
-                        </div>
-                      </div>
+                        Edit
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          this.props.dispatch(
+                            startRemoveAdminBlog(
+                              singleBlog.blogID,
+                              singleBlog.blogImageFileName
+                            )
+                          );
+                        }}
+                        color="danger"
+                      >
+                        Delete
+                      </Button>
+                    </ButtonGroup>
+                  </div>
+                </div>
+              ))}
+            {this.props.adminBlogs.map(singleBlog => {
+              if (singleBlog.blogIsPublic && !this.props.isAuthenticated) {
+                return (
+                  <div
+                    key={singleBlog.blogID}
+                    className="col-10  col-sm-10  col-md-5 col-lg-3 text-center mb-2 border rounded mx-auto shadow-lg mb-5 bg-white p-0"
+                  >
+                    <div className="blog-image my-4 p-0 ">
+                      <img
+                        src={singleBlog.blogImageURL}
+                        alt=""
+                        className="img-fluid my-auto"
+                      />
                     </div>
-                    <hr className="m-3" />
+
+                    <div className="card-body ">
+                      <h5
+                        style={{ wordBreak: "break-all" }}
+                        className="card-title"
+                      >
+                        {singleBlog.blogName}
+                      </h5>
+                      <p
+                        className="card-text"
+                        style={{ wordBreak: "break-all" }}
+                      >
+                        {`${singleBlog.blogDescription.substr(0, 80)}... `}
+                        <Button className="p-0" color="link">
+                          Click for more
+                        </Button>
+                      </p>
+
+                      <ButtonGroup>
+                        <Button
+                          onClick={() => {
+                            this.props.history.push(
+                              `editBlog/${singleBlog.blogID}`
+                            );
+                          }}
+                          color="warning"
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            this.props.dispatch(
+                              startRemoveAdminBlog(
+                                singleBlog.blogID,
+                                singleBlog.blogImageFileName
+                              )
+                            );
+                          }}
+                          color="danger"
+                        >
+                          Delete
+                        </Button>
+                      </ButtonGroup>
+                    </div>
                   </div>
                 );
               }
             })}
-
-          {this.props.isAuthenticated &&
-            this.props.adminBlogs.map(singleBlog => {
-              return (
-                <div key={singleBlog.blogID}>
-                  <div className="row text-center shadow">
-                    <div className="mx-auto col-8 col-xs-4 col-sm-6 col-md-6 col-lg-3 p-2 my-auto">
-                      <img
-                        className="img-fluid  img-thumbnail"
-                        src={singleBlog.blogImageURL}
-                        alt=""
-                      />
-                    </div>
-                    <div
-                      style={{ wordBreak: "break-all" }}
-                      className="col-8  col-xs-10 col-sm-6 col-md-6 col-lg-3 p-2 mx-auto my-auto"
-                    >
-                      <h3 className="d-inline">{singleBlog.blogName}</h3>
-                      <br />
-                      <h5 className="d-inline">{singleBlog.blogLocation}</h5>
-                      <h6>{singleBlog.blogDescription.substring(0, 100)}...</h6>
-                      <Button color="link">Click For More</Button>
-                      <div>
-                        <ButtonGroup hidden={!this.props.isAuthenticated}>
-                          <Button
-                            onClick={() => {
-                              this.props.history.push(
-                                `editBlog/${singleBlog.blogID}`
-                              );
-                            }}
-                            color="warning"
-                          >
-                            Edit
-                          </Button>
-                          <Button
-                            onClick={() => {
-                              this.props.dispatch(
-                                startRemoveAdminBlog(
-                                  singleBlog.blogID,
-                                  singleBlog.blogImageFileName
-                                )
-                              );
-                            }}
-                            color="danger"
-                          >
-                            Delete
-                          </Button>
-                        </ButtonGroup>
-                      </div>
-                    </div>
-                  </div>
-                  <hr className="m-3" />
-                </div>
-              );
-            })}
+          </div>
         </div>
       </div>
     );

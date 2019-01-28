@@ -82,3 +82,18 @@ h6 {
 .loadingPage {
   margin-top: 35%;
 }
+
+.blog-image img {
+  max-height: 150px;
+}
+.blog-image {
+  height: 150px;
+}
+.main-page img {
+  height: auto;
+  max-height: 500px;
+  max-width: 100%;
+}
+.main-page {
+  max-height: 450px;
+}

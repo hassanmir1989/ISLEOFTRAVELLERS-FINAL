@@ -53,8 +53,26 @@ const startRemoveVisitorReview = id => {
   };
 };
 
+const startAddReview = () => {
+  return dispatch => {
+    return database
+      .ref("visitorReviews")
+      .once("value")
+      .then(snapshot => {
+        snapshot.forEach(childSnapshot => {
+          dispatch(
+            addVisitorReview({
+              visitorReviewID: childSnapshot.key,
+              ...childSnapshot.val()
+            })
+          );
+        });
+      });
+  };
+};
+
 export {
-  addVisitorReview,
+  startAddReview,
   removeVisitorReview,
   startAddVisitorReview,
   startRemoveVisitorReview
