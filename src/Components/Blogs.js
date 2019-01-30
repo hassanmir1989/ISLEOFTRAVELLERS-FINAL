@@ -1,15 +1,8 @@
 import React from "react";
 import Header from "./Header";
 import { connect } from "react-redux";
-import {
-  Button,
-  ButtonGroup,
-  ButtonDropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu
-} from "reactstrap";
-
+import { Button, ButtonGroup } from "reactstrap";
+import SingleBlog from "../Components/SingleBlog";
 import { startRemoveAdminBlog } from "../actions/blogActions";
 class Blogs extends React.Component {
   constructor() {
@@ -29,7 +22,7 @@ class Blogs extends React.Component {
                   key={singleBlog.blogID}
                   className="col-10  col-sm-10  col-md-5 col-lg-3 text-center mb-2 border rounded mx-auto shadow-lg mb-5 bg-white p-0"
                 >
-                  <div className="blog-image my-4 p-0 ">
+                  <div className="blog-image my-4 mx-1 p-0 ">
                     <img
                       src={singleBlog.blogImageURL}
                       alt=""
@@ -44,14 +37,14 @@ class Blogs extends React.Component {
                     >
                       {singleBlog.blogName}
                     </h5>
-                    <p className="card-text" style={{ wordBreak: "break-all" }}>
+                    <p
+                      className="card-text d-inline"
+                      style={{ wordBreak: "break-all" }}
+                    >
                       {`${singleBlog.blogDescription.substr(0, 80)}... `}
-                      <Button className="p-0" color="link">
-                        Click for more
-                      </Button>
                     </p>
-
-                    <ButtonGroup>
+                    <SingleBlog {...singleBlog} buttonLabel="Click for more" />
+                    <ButtonGroup className="d-block">
                       <Button
                         onClick={() => {
                           this.props.history.push(
@@ -86,7 +79,7 @@ class Blogs extends React.Component {
                     key={singleBlog.blogID}
                     className="col-10  col-sm-10  col-md-5 col-lg-3 text-center mb-2 border rounded mx-auto shadow-lg mb-5 bg-white p-0"
                   >
-                    <div className="blog-image my-4 p-0 ">
+                    <div className="blog-image my-4 mx-1 my-4 p-0 ">
                       <img
                         src={singleBlog.blogImageURL}
                         alt=""
@@ -94,7 +87,7 @@ class Blogs extends React.Component {
                       />
                     </div>
 
-                    <div className="card-body ">
+                    <div className="card-body">
                       <h5
                         style={{ wordBreak: "break-all" }}
                         className="card-title"
@@ -102,40 +95,15 @@ class Blogs extends React.Component {
                         {singleBlog.blogName}
                       </h5>
                       <p
-                        className="card-text"
+                        className="card-text p-0 m-0"
                         style={{ wordBreak: "break-all" }}
                       >
-                        {`${singleBlog.blogDescription.substr(0, 80)}... `}
-                        <Button className="p-0" color="link">
-                          Click for more
-                        </Button>
-                      </p>
-
-                      <ButtonGroup>
-                        <Button
-                          onClick={() => {
-                            this.props.history.push(
-                              `editBlog/${singleBlog.blogID}`
-                            );
-                          }}
-                          color="warning"
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            this.props.dispatch(
-                              startRemoveAdminBlog(
-                                singleBlog.blogID,
-                                singleBlog.blogImageFileName
-                              )
-                            );
-                          }}
-                          color="danger"
-                        >
-                          Delete
-                        </Button>
-                      </ButtonGroup>
+                        {`${singleBlog.blogDescription.substr(0, 80)}...`}
+                      </p>{" "}
+                      <SingleBlog
+                        {...singleBlog}
+                        buttonLabel="Click for more"
+                      />
                     </div>
                   </div>
                 );

@@ -20,9 +20,10 @@ const addVisitorReview = ({
 });
 
 const startAddVisitorReview = (reviewData = {}) => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const uid = getState().authReducer.uid;
     database
-      .ref("visitorReviews")
+      .ref(`visitorReviews/${uid}`)
       .push({
         ...reviewData
       })
@@ -43,9 +44,10 @@ const removeVisitorReview = id => ({
 });
 
 const startRemoveVisitorReview = id => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const uid = getState().authReducer.uid;
     database
-      .ref(`visitorReviews/${id}`)
+      .ref(`visitorReviews/${uid}/${id}`)
       .remove()
       .then(() => {
         dispatch(removeVisitorReview(id));
@@ -54,9 +56,10 @@ const startRemoveVisitorReview = id => {
 };
 
 const startAddReview = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const uid = getState().authReducer.uid;
     return database
-      .ref("visitorReviews")
+      .ref(`visitorReviews/${uid}`)
       .once("value")
       .then(snapshot => {
         snapshot.forEach(childSnapshot => {

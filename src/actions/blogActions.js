@@ -27,9 +27,10 @@ const addAdminBlog = ({
 });
 
 const startAddAdminBlog = (blogDetails = {}) => {
-  return (dispatch, state) => {
+  return (dispatch, getState) => {
+    const uid = getState().authReducer.uid;
     database
-      .ref(`adminBlogs`)
+      .ref(`adminBlogs/${uid}`)
       .push({
         ...blogDetails,
         blogUploadTime: blogDetails.blogUploadTime.valueOf()
@@ -52,9 +53,10 @@ const removeAdminBlog = id => ({
 });
 
 const startRemoveAdminBlog = (id, blogImageFileName) => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const uid = getState().authReducer.uid;
     database
-      .ref(`adminBlogs/${id}`)
+      .ref(`adminBlogs/${uid}/${id}`)
       .remove()
       .then(() => {
         storage
@@ -74,9 +76,10 @@ const editAdminBlog = ({ id, blog }) => ({
 });
 
 const startEditAdminBlog = ({ id, blog }) => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const uid = getState().authReducer.uid;
     database
-      .ref(`adminBlogs/${id}`)
+      .ref(`adminBlogs/${uid}/${id}`)
       .update({
         ...blog,
         blogUploadTime: blog.blogUploadTime.valueOf()
@@ -88,9 +91,10 @@ const startEditAdminBlog = ({ id, blog }) => {
 };
 
 const startAddBlogs = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
     return database
-      .ref("adminBlogs")
+      .ref(`adminBlogs`)
+      .child("5nXKdslYILdX5L0erMRrsp6xHJ82")
       .once("value")
       .then(snapshot => {
         snapshot.forEach(childSnapshot => {

@@ -12,6 +12,7 @@ import {
 import { startAddVisitorReview } from "../actions/visitorReview";
 import { connect } from "react-redux";
 import moment from "moment";
+import validator from "validator";
 class ContactUs extends React.Component {
   constructor() {
     super();
@@ -33,22 +34,46 @@ class ContactUs extends React.Component {
 
   onSubmitReview(e) {
     e.preventDefault();
-    if (
-      this.state.visitorName &&
-      this.state.visitorEmail &&
-      this.state.visitorReview
-    ) {
+
+    if (!this.state.visitorName) {
       this.setState(() => ({
-        error: ""
+        error: "Please enter your name"
       }));
-      this.props.addVisitorReview({ ...this.state });
-      this.props.history.push("/");
+    } else if (!validator.isEmail(this.state.visitorEmail)) {
+      this.setState(() => ({
+        error: "Invalid Email"
+      }));
+    } else if (!this.state.visitorReview) {
+      this.setState(() => ({
+        error:
+          "We would appriciate if you could write your review rather than leaving us unaware of your emotions "
+      }));
     } else {
       this.setState(() => ({
-        error: "Please Enter the required details with '*'",
+        error: "",
         visitorReviewTime: moment().valueOf()
       }));
+
+      this.props.addVisitorReview({ ...this.state });
+      this.props.history.push("/");
     }
+
+    // if (
+    //   validator.isEmail(this.state.visitorEmail) &&
+    //   validator.isAlpha(this.state.visitorName) &&
+    //   this.state.visitorReview
+    // ) {
+    //   this.setState(() => ({
+    //     error: ""
+    //   }));
+    //   this.props.addVisitorReview({ ...this.state });
+    //   this.props.history.push("/");
+    // } else {
+    //   this.setState(() => ({
+    //     error: "Please Enter the required details with '*'",
+    //     visitorReviewTime: moment().valueOf()
+    //   }));
+    // }
   }
 
   onChangeVisitorName(e) {
@@ -74,6 +99,7 @@ class ContactUs extends React.Component {
 
   onChangeVisitorEmail(e) {
     const visitorEmail = e.target.value;
+
     this.setState(() => ({
       visitorEmail
     }));
@@ -121,6 +147,7 @@ class ContactUs extends React.Component {
                     onChange={this.onChangeVisitorContact}
                   />
                 </FormGroup>
+
                 <FormGroup>
                   <Label>
                     Email <span className="mandatoryFields">*</span>

@@ -11,6 +11,8 @@ import {
 } from "../src/actions/blogActions";
 import moment from "moment";
 import { auth } from "./firebase/firebase";
+import database from "./firebase/firebase";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import "react-dates/initialize";
@@ -31,8 +33,10 @@ let hasRendered = false;
 
 const render = () => {
   if (!hasRendered) {
-    store.dispatch(startAddBlogs());
-    ReactDOM.render(<ReduxApp />, rootElement);
+    store.dispatch(startAddBlogs()).then(() => {
+      ReactDOM.render(<ReduxApp />, rootElement);
+    });
+
     hasRendered = true;
   }
 };
@@ -50,6 +54,7 @@ auth.onAuthStateChanged(user => {
     }
   } else {
     render();
+
     store.dispatch(logout());
   }
 });

@@ -11,6 +11,7 @@ import createHistory from "history/createBrowserHistory";
 import VisitorReviews from "../Components/VisitorReviews";
 import SignUp from "../Components/SignUp";
 import PrivateRoute from "./PrivateRoutes";
+import MainPageImages from "../Components/MainPageImages";
 export const history = createHistory();
 
 const AppRouter = () => (
@@ -21,6 +22,7 @@ const AppRouter = () => (
       <PrivateRoute path="/addBlog" component={AddBlog} />
       <PrivateRoute path="/editBlog/:id" component={EditBlog} />
       <PrivateRoute path="/signUp" component={SignUp} />
+      <PrivateRoute path="/mainPageImages" component={MainPageImages} />
       <Route path="/logIn" component={LogIn} />
       <PrivateRoute path="/visitorReviews" component={VisitorReviews} />
       <Route path="/contactUs" component={ContactUs} />

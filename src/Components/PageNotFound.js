@@ -7,7 +7,7 @@ export default () => (
       <div className="text-center">
         <i className="far fa-frown display-1 " />
 
-        <h1 class="display-3">
+        <h1 className="display-3">
           404 <br />
           Page not found
         </h1>

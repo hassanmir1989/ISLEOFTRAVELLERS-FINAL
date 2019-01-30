@@ -15,6 +15,7 @@ import { auth } from "../firebase/firebase";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../actions/auth";
+import { history } from "../AppRouter/AppRouter";
 
 class Header extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class Header extends React.Component {
         <Navbar color="light" light expand="md">
           <div className="container mt-2">
             <NavLink className="navbarBrand font-italic" to="/">
-              <i className="fas fa-globe-asia" /> Isle of Travellers{" "}
+              <i className="fas fa-globe-asia " /> Isle of Travellers{" "}
             </NavLink>
 
             <NavbarToggler onClick={this.toggle} />
@@ -52,18 +53,32 @@ class Header extends React.Component {
                     <p>Welcome {this.props.authID}</p>
                   )}
                 </NavLink>
-                <NavLink
-                  className="headerLinks"
-                  activeClassName="selected"
-                  to="/"
-                >
-                  Adventures
+                <NavLink className="headerLinks" to="/">
+                  {history.location.pathname === "/" ? (
+                    <span className="text-monospace">
+                      <u>Adventures</u>
+                    </span>
+                  ) : (
+                    <span className="text-monospace">Adventures</span>
+                  )}
                 </NavLink>
                 <NavLink className="headerLinks" to="/blogs">
-                  Blog
+                  {history.location.pathname === "/blogs" ? (
+                    <span className="text-monospace">
+                      <u>Blog</u>
+                    </span>
+                  ) : (
+                    <span className="text-monospace">Blog</span>
+                  )}
                 </NavLink>
                 <NavLink className="headerLinks" to="/contactUs">
-                  Contact Us
+                  {history.location.pathname === "/contactUs" ? (
+                    <span className="text-monospace">
+                      <u>Contact Us</u>
+                    </span>
+                  ) : (
+                    <span className="text-monospace">Contact Us</span>
+                  )}
                 </NavLink>
                 <UncontrolledDropdown
                   hidden={!this.props.isAuthenticated}
@@ -76,6 +91,9 @@ class Header extends React.Component {
                   <DropdownMenu>
                     <NavLink to="/addBlog">
                       <DropdownItem>Add Blog</DropdownItem>
+                    </NavLink>
+                    <NavLink to="/mainPageImages">
+                      <DropdownItem>Add Image on MainPage</DropdownItem>
                     </NavLink>
                     <NavLink to="/visitorReviews">
                       <DropdownItem>Customer Reviews</DropdownItem>
